@@ -1,48 +1,91 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-[RequireComponent(typeof(SphereCollider))]
-[RequireComponent(typeof(Rigidbody))]
+using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     #region Event
-    
-    #endregion
-    public float speed = 10.0f;
-    private PlayerControls playerControls;
+    public delegate void MoveEvent(float value);
+    public event MoveEvent OnMoveHorizontal;
+    public event MoveEvent OnMoveVertical;
+    public event MoveEvent OnEndHorizontal;
+    public event MoveEvent OnEndVertical;
 
+    public delegate void InteractEvent();
+    public event InteractEvent OnInteract;
+
+    public delegate void MouseEvent(Vector2 position);
+    public event MouseEvent OnMouse;
+    #endregion
+
+    private PlayerControls playerControls;
+    public static PlayerController Instance { get; private set; }
     private void Awake()
     {
         playerControls = new PlayerControls();
-    }
 
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
     private void OnEnable()
     {
         playerControls.Enable();
     }
-
     private void OnDisable()
     {
         playerControls.Disable();
     }
-
-    private void Update()
+    private void Start()
     {
-        // Read the movement value
-        float moveHorizontal = playerControls.Map.MoveHorizontal.ReadValue<float>();
-        float moveVertical = playerControls.Map.MoveVertical.ReadValue<float>();
-
-        Vector3 currentPos = transform.position;
-        currentPos.x += moveHorizontal * speed * Time.deltaTime;
-        currentPos.z += moveVertical * speed * Time.deltaTime;
-        transform.position = currentPos;
-        //playerControls.Map.Interact.ReadValue<float>();
-        // Move the Player
-        // Read the interaction value
+        playerControls.Map.MoveHorizontal.started += ctx => StartMoveHorizontal(ctx);
+        playerControls.Map.MoveVertical.started += ctx => StartMoveVertical(ctx);
+        playerControls.Map.MoveHorizontal.canceled += ctx => EndMoveHorizontal(ctx);
+        playerControls.Map.MoveVertical.canceled += ctx => EndMoveVertical(ctx);
+        playerControls.Map.Interact.performed += ctx => StartInteract(ctx);
+        playerControls.Map.Mouse.started += ctx => StartMouse(ctx);
     }
-    private void OnCollisionEnter(Collision collision)
+    private void StartMoveHorizontal(InputAction.CallbackContext context)
     {
-        Debug.Log("Collide 3D");
+        if(OnMoveHorizontal != null)
+        {
+            OnMoveHorizontal(playerControls.Map.MoveHorizontal.ReadValue<float>());
+        }
+    }
+    private void StartMoveVertical(InputAction.CallbackContext context)
+    {
+        if(OnMoveVertical != null)
+        {
+            OnMoveVertical(playerControls.Map.MoveVertical.ReadValue<float>());
+        }
+    }
+    private void EndMoveHorizontal(InputAction.CallbackContext context)
+    {
+        if(OnEndHorizontal != null)
+        {
+            OnEndHorizontal(playerControls.Map.MoveHorizontal.ReadValue<float>());
+        }
+    }
+    private void EndMoveVertical(InputAction.CallbackContext context)
+    {
+        if(OnEndVertical != null)
+        {
+            OnEndVertical(playerControls.Map.MoveVertical.ReadValue<float>());
+        }
+    }
+    private void StartMouse(InputAction.CallbackContext context)
+    {
+        if(OnMouse != null)
+        {
+            OnMouse(playerControls.Map.Mouse.ReadValue<Vector2>());
+        }
+    }
+    private void StartInteract(InputAction.CallbackContext context)
+    {
+        if(OnInteract != null)
+        {
+            OnInteract();
+        }
     }
 }
