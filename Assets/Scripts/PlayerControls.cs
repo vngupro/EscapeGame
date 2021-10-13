@@ -49,6 +49,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Value"",
+                    ""id"": ""e75d344b-8992-4b7a-98e2-74ca6ad3fa92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -348,6 +356,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""307c298d-6577-4f24-9c98-081113ddcb0c"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -360,6 +379,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Map_MoveVertical = m_Map.FindAction("Move Vertical", throwIfNotFound: true);
         m_Map_Interact = m_Map.FindAction("Interact", throwIfNotFound: true);
         m_Map_Mouse = m_Map.FindAction("Mouse", throwIfNotFound: true);
+        m_Map_Inventory = m_Map.FindAction("Inventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -413,6 +433,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Map_MoveVertical;
     private readonly InputAction m_Map_Interact;
     private readonly InputAction m_Map_Mouse;
+    private readonly InputAction m_Map_Inventory;
     public struct MapActions
     {
         private @PlayerControls m_Wrapper;
@@ -421,6 +442,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @MoveVertical => m_Wrapper.m_Map_MoveVertical;
         public InputAction @Interact => m_Wrapper.m_Map_Interact;
         public InputAction @Mouse => m_Wrapper.m_Map_Mouse;
+        public InputAction @Inventory => m_Wrapper.m_Map_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -442,6 +464,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Mouse.started -= m_Wrapper.m_MapActionsCallbackInterface.OnMouse;
                 @Mouse.performed -= m_Wrapper.m_MapActionsCallbackInterface.OnMouse;
                 @Mouse.canceled -= m_Wrapper.m_MapActionsCallbackInterface.OnMouse;
+                @Inventory.started -= m_Wrapper.m_MapActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_MapActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_MapActionsCallbackInterface.OnInventory;
             }
             m_Wrapper.m_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -458,6 +483,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Mouse.started += instance.OnMouse;
                 @Mouse.performed += instance.OnMouse;
                 @Mouse.canceled += instance.OnMouse;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
             }
         }
     }
@@ -468,5 +496,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMoveVertical(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
     }
 }

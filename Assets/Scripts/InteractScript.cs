@@ -5,9 +5,11 @@ using UnityEngine;
 public class InteractScript : MonoBehaviour
 {
     private PlayerController controller;
+    private MoveScript moveScript;
     private void Start()
     {
         controller = PlayerController.Instance;
+        moveScript = MoveScript.Instance;
         controller.OnInteract += Interact;
     }
 
@@ -18,6 +20,6 @@ public class InteractScript : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log("Interact");
+        MoveScript.Instance.StopMove();
     }
 }

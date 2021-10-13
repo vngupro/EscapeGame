@@ -11,23 +11,27 @@ public class PlayerController : MonoBehaviour
 
     public delegate void InteractEvent();
     public event InteractEvent OnInteract;
+    public event InteractEvent OnInventory;
 
     public delegate void MouseEvent(Vector2 position);
     public event MouseEvent OnMouse;
     #endregion
+
+    //[Range(0.0f, 10.0f)]
+    //public float speed = 10.0f;
+    //private Rigidbody rb;
 
     private PlayerControls playerControls;
     public static PlayerController Instance { get; private set; }
     private void Awake()
     {
         playerControls = new PlayerControls();
-
+        //rb = GetComponent<Rigidbody>();
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
         }
         Instance = this;
-        DontDestroyOnLoad(this.gameObject);
     }
     private void OnEnable()
     {
@@ -45,7 +49,9 @@ public class PlayerController : MonoBehaviour
         playerControls.Map.MoveVertical.canceled += ctx => EndMoveVertical(ctx);
         playerControls.Map.Interact.performed += ctx => StartInteract(ctx);
         playerControls.Map.Mouse.started += ctx => StartMouse(ctx);
+        playerControls.Map.Inventory.performed += ctx => StartInventory(ctx);
     }
+
     private void StartMoveHorizontal(InputAction.CallbackContext context)
     {
         if(OnMoveHorizontal != null)
@@ -88,4 +94,21 @@ public class PlayerController : MonoBehaviour
             OnInteract();
         }
     }
+    private void StartInventory(InputAction.CallbackContext context)
+    {
+        if (OnInventory != null)
+        {
+            OnInventory();
+        }
+    }
+
+    //private void Update()
+    //{
+    //    Vector3 currentPos = transform.position;
+    //    float moveVertical = playerControls.Map.MoveVertical.ReadValue<float>();
+    //    float moveHorizontal = playerControls.Map.MoveHorizontal.ReadValue<float>();
+    //    currentPos.x += moveHorizontal * speed * Time.deltaTime;
+    //    currentPos.z += moveVertical * speed * Time.deltaTime;
+    //    rb.MovePosition(currentPos);
+    //}
 }
