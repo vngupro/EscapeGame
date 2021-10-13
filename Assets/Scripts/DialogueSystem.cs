@@ -6,5 +6,4 @@ using UnityEngine;
 public class DialogueSystem : ScriptableObject
 {
     public List<Dialogue> dialogues;
-
 }
