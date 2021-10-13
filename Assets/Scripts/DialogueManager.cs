@@ -14,7 +14,11 @@ public class DialogueManager : MonoBehaviour
     {
         int maxSystem = dialogueSystems.Count;
         int maxDialogue = dialogueSystems[systemIndex].dialogues.Count - 1;
-        if(systemIndex >= maxSystem || maxDialogue >= dialogueIndex) { return; }
+        Debug.Log("Max System " + maxSystem);
+        Debug.Log("Max Dialogue " + maxDialogue);
+        Debug.Log("dialogueIndex " + dialogueIndex);
+        Debug.Log("sys index " + systemIndex);
+        if(systemIndex >= maxSystem || dialogueIndex >= maxDialogue) { return; }
         dialogueBox.text = dialogueSystems[systemIndex].dialogues[dialogueIndex].text;
     }
     public void PlayDialogueSystemByIndex(int index)

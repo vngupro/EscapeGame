@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
-[RequireComponent(typeof(Animator))]
+//[RequireComponent(typeof(Animator))]
 public class MoveScript : MonoBehaviour
 {
     public float speed = 15.0f;
@@ -11,7 +11,7 @@ public class MoveScript : MonoBehaviour
     private Coroutine doHorizontal;
     private Coroutine doVertical;
     private Rigidbody rb;
-    private Animator animator;
+    //private Animator animator;
     [HideInInspector]
     public bool canMove = true;
     private PlayerController controller;
@@ -25,7 +25,7 @@ public class MoveScript : MonoBehaviour
         Instance = this;
 
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         controller = PlayerController.Instance;
         
         controller.OnMoveHorizontal += MoveHorizontal;
@@ -75,11 +75,11 @@ public class MoveScript : MonoBehaviour
     public void EndMoveHorizontal(float direction)
     {
         if (!canMove) { return; }
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Move_Front") &&
-            !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Move_Back"))
-        {
-            animator.Play("Player_Idle");
-        }
+        //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Move_Front") &&
+        //    !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Move_Back"))
+        //{
+        //    animator.Play("Player_Idle");
+        //}
    
         if (doHorizontal != null)
         {
@@ -90,11 +90,11 @@ public class MoveScript : MonoBehaviour
     public void EndMoveVertical(float direction)
     {
         if (!canMove) { return; }
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Move_Right") &&
-            !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Move_Left"))
-        {
-            animator.Play("Player_Idle");
-        }
+        //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Move_Right") &&
+        //    !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Move_Left"))
+        //{
+        //    animator.Play("Player_Idle");
+        //}
 
         if (doVertical != null)
         {
