@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
 //[RequireComponent(typeof(Animator))]
 public class MoveScript : MonoBehaviour
@@ -15,6 +15,7 @@ public class MoveScript : MonoBehaviour
     [HideInInspector]
     public bool canMove = true;
     private PlayerController controller;
+    private CharacterController characterController;
     public static MoveScript Instance { get; private set; }
     private void Start()
     {
@@ -27,7 +28,7 @@ public class MoveScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //animator = GetComponent<Animator>();
         controller = PlayerController.Instance;
-        
+        characterController = GetComponent<CharacterController>();
         controller.OnMoveHorizontal += MoveHorizontal;
         controller.OnMoveVertical += MoveVertical;
         controller.OnEndHorizontal += EndMoveHorizontal;
@@ -108,6 +109,7 @@ public class MoveScript : MonoBehaviour
             Vector3 currentPos = transform.position;
             currentPos.x += direction * speed * Time.deltaTime;
             rb.MovePosition(currentPos);
+            //characterController.Move(currentPos * Time.deltaTime);
             yield return null;
         }
     }
@@ -117,6 +119,7 @@ public class MoveScript : MonoBehaviour
         {
             Vector3 currentPos = transform.position;
             currentPos.z += direction * speed * Time.deltaTime;
+            //characterController.Move(currentPos * Time.deltaTime);
             rb.MovePosition(currentPos);
             yield return null;
         }

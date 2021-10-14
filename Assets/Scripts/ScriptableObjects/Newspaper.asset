@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec3de83a2addc9488a7b90d2b04b37c, type: 3}
+  m_Name: Newspaper
+  m_EditorClassIdentifier: 
+  description: "Un journal. Est-il \xE0 la bonne date ?"
+  sprite: {fileID: 21300000, guid: 39a940d4126380b4b8104905ec8136c7, type: 3}
+  spriteSlot: {fileID: 21300000, guid: 39a940d4126380b4b8104905ec8136c7, type: 3}
+  spriteUI: {fileID: 21300000, guid: 179d834ac90e6ac49876a0f740426928, type: 3}

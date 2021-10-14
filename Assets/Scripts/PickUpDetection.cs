@@ -12,7 +12,7 @@ public class PickUpDetection : DetectionScript
     {
         base.Start();
         PlayerController.Instance.OnInteract += PickUp;
-        image.sprite = item.itemData.sprite;
+        image.sprite = item.itemData.spriteUI;
         canPickUp = true;
     }
     public void PickUp()
@@ -22,9 +22,16 @@ public class PickUpDetection : DetectionScript
             InventoryManager.Instance.AddItem(item.itemData);
             canPickUp = false;
         }
-    
     }
 
+    public override void TriggerEnigma()
+    {
+        base.TriggerEnigma();
+        if (!isOpen && canOpen)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
     public override void Reset()
     {
         base.Reset();

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CullingCamera : MonoBehaviour
 {
+    private int index = 0;
     void Update()
     {
         RaycastHit[] hits;
@@ -11,21 +12,9 @@ public class CullingCamera : MonoBehaviour
 
         foreach(RaycastHit hit in hits)
         {
-            Renderer rend = hit.transform.GetComponent<Renderer>();
-            if (rend)
+            if (hit.collider.gameObject.CompareTag("Culling"))
             {
-                if (hit.transform.gameObject.CompareTag("Player"))
-                {
-                    return;
-
-                }
-                else
-                {
-                    rend.material.shader = Shader.Find("Universal Render Pipeline/Unlit");
-                    Color tempColor = rend.material.color;
-                    tempColor.a = 0.3F;
-                    rend.material.color = tempColor;
-                }
+                hit.transform.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             }
         }
     }

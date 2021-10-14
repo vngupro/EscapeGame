@@ -11,7 +11,8 @@ public class DetectionScript : MonoBehaviour
 
     [HideInInspector]
     public bool canOpen = false;
-    private bool isOpen = false;
+    [HideInInspector]
+    public bool isOpen = false;
     [HideInInspector]
     public PlayerController controller;
 
@@ -19,8 +20,12 @@ public class DetectionScript : MonoBehaviour
     public virtual void Reset()
     {
         GetComponent<BoxCollider>().isTrigger = true;
+        canvasInteract.gameObject.SetActive(false);
     }
-
+    private void Awake()
+    {
+        canvasInteract.gameObject.SetActive(false);
+    }
     public virtual void Start()
     {
         controller = PlayerController.Instance;
@@ -37,7 +42,7 @@ public class DetectionScript : MonoBehaviour
         controller.OnInteract -= TriggerEnigma;
     }
 
-    private void TriggerEnigma()
+    public virtual void TriggerEnigma()
     {
         if (canOpen)
         {

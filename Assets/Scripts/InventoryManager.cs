@@ -31,6 +31,7 @@ public class InventoryManager : MonoBehaviour
     public void AddItem(ItemData data)
     {
         GameObject newSlot = Instantiate(slotPrefab, ui.grid.transform);
+        ui.AddItemUI(newSlot);
         InventorySlot slot = newSlot.GetComponent<InventorySlot>();
         slot.itemData = data;
         slot.image.sprite = data.spriteSlot;
@@ -42,7 +43,28 @@ public class InventoryManager : MonoBehaviour
     {
         ui.ShowItem(data);
     }
-
+    public void RemoveItem(ItemData data)
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].itemData == data)
+            {
+                slots.RemoveAt(i);
+                ui.RemoveItemUIAtIndex(i);
+            }
+        }
+    }
+    public bool SearchItem(ItemData data)
+    {
+        for(int i = 0; i < slots.Count; i++)
+        {
+            if(slots[i].itemData == data)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public void TriggerPanel()
     {
         if(slots[0] != null)

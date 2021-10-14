@@ -163,6 +163,7 @@ MonoBehaviour:
   canvasInteract: {fileID: 4046541530707560428}
   canvasClue: {fileID: 4046541532124783147}
   canOpen: 0
+  isOpen: 0
   controller: {fileID: 0}
   item: {fileID: 4046541532114356129}
   image: {fileID: 4046541530747183761}
@@ -404,9 +405,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 4046541531717444859}
     m_Modifications:
     - target: {fileID: 1485493772769891576, guid: 79cdefcc847e3384b9ab9b3ac265efc4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1485493772769891576, guid: 79cdefcc847e3384b9ab9b3ac265efc4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 4046541531717444861}
+    - target: {fileID: 1485493772769891576, guid: 79cdefcc847e3384b9ab9b3ac265efc4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 4046541531717444860}
     - target: {fileID: 1955974759566463504, guid: 79cdefcc847e3384b9ab9b3ac265efc4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
