@@ -21,6 +21,18 @@ public class PickUpDetection : DetectionScript
         {
             InventoryManager.Instance.AddItem(item.itemData);
             canPickUp = false;
+
+            if(item.itemData.name == "Key_001" || 
+                item.itemData.name == "Key_002" || 
+                item.itemData.name == "Key_003" || 
+                item.itemData.name == "Chrysantheme")
+            {
+                SoundManager.Instance.PlaySound("Key");
+            }
+            else if(item.itemData.name == "Photo")
+            {
+                SoundManager.Instance.PlaySound("Paper");
+            }
         }
     }
 

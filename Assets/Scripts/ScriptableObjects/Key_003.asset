@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Key_003
   m_EditorClassIdentifier: 
   description: A key. Which door does it open ?
-  sprite: {fileID: 21300000, guid: 3ef62c93858b2944d947331f9e3be63a, type: 3}
+  sprite: {fileID: 0}
   spriteSlot: {fileID: 21300000, guid: 3ef62c93858b2944d947331f9e3be63a, type: 3}
   spriteUI: {fileID: 21300000, guid: 3ef62c93858b2944d947331f9e3be63a, type: 3}

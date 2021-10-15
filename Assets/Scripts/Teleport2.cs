@@ -10,14 +10,11 @@ public class Teleport2 : MonoBehaviour
     public FadeScript fade;
     private PlayerController controller;
     private bool canTeleport = false;
-
-
     private void Awake()
     {
         interact.SetActive(false);
-
-        GameEvents.OnMidTransition.AddListener(Teleportation2);
     }
+
     [Button]
     public void Init()
     {
@@ -27,35 +24,46 @@ public class Teleport2 : MonoBehaviour
     {
         controller = PlayerController.Instance;
 
-        controller.OnInteract += ChangeLocation2;
+        controller.OnInteract += Teleportation2;
     }
 
     private void OnDisable()
     {
-        controller.OnInteract -= ChangeLocation2;
+        controller.OnInteract -= Teleportation2;
     }
-
-    public void ChangeLocation2()
-    {
-
-        if (canTeleport)
-        {
-            //fade.FadeIn();
-            controller.gameObject.transform.position = spawnPoint.transform.position;
-        }
-    }
-
     public void Teleportation2()
     {
         if (canTeleport)
         {
-            Debug.Log("Teleport 2");
-            //controller.gameObject.transform.position = spawnPoint.transform.position;
-            fade.FadeOut();
+            StartCoroutine(OnTeleport(0, 1));
         }
-
     }
 
+    private IEnumerator OnTeleport(int min, int max)
+    {
+        SoundManager.Instance.PlaySound("Door");
+        float timer = 0;
+        while (timer <= fade.fadeTime)
+        {
+            float ratio = timer / fade.fadeTime;
+            timer += Time.deltaTime;
+            fade.canvas.alpha = Mathf.Lerp(min, max, fade.curve.Evaluate(ratio));
+            yield return null;
+        }
+        fade.canvas.alpha = max;
+
+        controller.gameObject.transform.position = spawnPoint.transform.position;
+        yield return new WaitForSeconds(0.1f);
+        timer = 0;
+        while (timer <= fade.fadeTime)
+        {
+            float ratio = timer / fade.fadeTime;
+            timer += Time.deltaTime;
+            fade.canvas.alpha = Mathf.Lerp(max, min, fade.curve.Evaluate(ratio));
+            yield return null;
+        }
+        fade.canvas.alpha = min;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

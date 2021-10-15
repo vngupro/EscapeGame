@@ -50,8 +50,13 @@ public class PlayerController : MonoBehaviour
         playerControls.Map.Interact.performed += ctx => StartInteract(ctx);
         playerControls.Map.Mouse.started += ctx => StartMouse(ctx);
         playerControls.Map.Inventory.performed += ctx => StartInventory(ctx);
+        playerControls.Map.Exit.performed += ctx => ExitGame(ctx);
     }
 
+    private void ExitGame(InputAction.CallbackContext context)
+    {
+        Application.Quit();
+    }
     private void StartMoveHorizontal(InputAction.CallbackContext context)
     {
         if(OnMoveHorizontal != null)

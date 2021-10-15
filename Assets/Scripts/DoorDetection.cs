@@ -12,7 +12,7 @@ public class DoorDetection : MonoBehaviour
     #endregion
     [Title("Assets Only")]
     public GameObject door;
-    public GameObject key;
+    public ItemData key;
     public GameObject interact;
     [HideInInspector]
     public bool canOpen = false;
@@ -53,9 +53,10 @@ public class DoorDetection : MonoBehaviour
             isOpen = true;
             canOpen = false;
             animator.Play("DoorAnimation");
-            ItemData data = key.GetComponent<Item>().itemData;
-            inventory.RemoveItem(data);
+            
+            inventory.RemoveItem(key);
 
+            SoundManager.Instance.PlaySound("Door");
             if(OnTeleport != null)
             {
                 OnTeleport();
@@ -77,8 +78,7 @@ public class DoorDetection : MonoBehaviour
 
     private void VerifyHasKey()
     {
-        ItemData data = key.GetComponent<Item>().itemData;
-        hasKey = inventory.SearchItem(data);
+        hasKey = inventory.SearchItem(key);
 
         if (hasKey)
         {

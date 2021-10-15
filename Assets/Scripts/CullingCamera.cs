@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CullingCamera : MonoBehaviour
 {
-    private int index = 0;
     void Update()
     {
         RaycastHit[] hits;

@@ -57,6 +57,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Value"",
+                    ""id"": ""90150969-fcad-4924-b7c6-e067436314c5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -367,6 +375,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb346ced-6b00-4a55-82c7-5392e3e7af4d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -380,6 +399,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Map_Interact = m_Map.FindAction("Interact", throwIfNotFound: true);
         m_Map_Mouse = m_Map.FindAction("Mouse", throwIfNotFound: true);
         m_Map_Inventory = m_Map.FindAction("Inventory", throwIfNotFound: true);
+        m_Map_Exit = m_Map.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -434,6 +454,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Map_Interact;
     private readonly InputAction m_Map_Mouse;
     private readonly InputAction m_Map_Inventory;
+    private readonly InputAction m_Map_Exit;
     public struct MapActions
     {
         private @PlayerControls m_Wrapper;
@@ -443,6 +464,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_Map_Interact;
         public InputAction @Mouse => m_Wrapper.m_Map_Mouse;
         public InputAction @Inventory => m_Wrapper.m_Map_Inventory;
+        public InputAction @Exit => m_Wrapper.m_Map_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -467,6 +489,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Inventory.started -= m_Wrapper.m_MapActionsCallbackInterface.OnInventory;
                 @Inventory.performed -= m_Wrapper.m_MapActionsCallbackInterface.OnInventory;
                 @Inventory.canceled -= m_Wrapper.m_MapActionsCallbackInterface.OnInventory;
+                @Exit.started -= m_Wrapper.m_MapActionsCallbackInterface.OnExit;
+                @Exit.performed -= m_Wrapper.m_MapActionsCallbackInterface.OnExit;
+                @Exit.canceled -= m_Wrapper.m_MapActionsCallbackInterface.OnExit;
             }
             m_Wrapper.m_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -486,6 +511,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
+                @Exit.started += instance.OnExit;
+                @Exit.performed += instance.OnExit;
+                @Exit.canceled += instance.OnExit;
             }
         }
     }
@@ -497,5 +525,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }

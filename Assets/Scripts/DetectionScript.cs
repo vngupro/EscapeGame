@@ -21,10 +21,12 @@ public class DetectionScript : MonoBehaviour
     {
         GetComponent<BoxCollider>().isTrigger = true;
         canvasInteract.gameObject.SetActive(false);
+        canvasClue.gameObject.SetActive(false);
     }
     private void Awake()
     {
         canvasInteract.gameObject.SetActive(false);
+        canvasClue.gameObject.SetActive(false);
     }
     public virtual void Start()
     {
